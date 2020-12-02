@@ -1,0 +1,19 @@
+{
+  "name": "daily-web-app",
+  "version": "1.0.0",
+  "description": "CIS 598 Project",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sealater/daily-web-app.git"
+  },
+  "author": "Ethan Davis",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/sealater/daily-web-app/issues"
+  },
+  "homepage": "https://github.com/sealater/daily-web-app#readme"
+}
