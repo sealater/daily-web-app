@@ -4,64 +4,60 @@
 
 const express = require('express');
 
-// Endpoints
-const serveIndex = require('./endpoints/serve-index.js');
-const serveStandards = require('./endpoints/serve-standards.js');
-const serveSignup = require('./endpoints/serve-signup.js');
-const serveSignin = require('./endpoints/serve-signin.js');
+// [ Endpoints ] //
 
-const createUser = require('./endpoints/serve-signup-post');
-const createSession = require('./endpoints/serve-signin-post');
-const destroySession = require('./endpoints/serve-signout');
+// | Dashboard | //
+const serveDashboard = require('./endpoints/serve-dashboard.js');
 
-const topicList = require('./endpoints/serve-topic-list');
-const topicPostList = require('./endpoints/serve-topic-post-list');
+// | Tasks | //
+// Content
+const serveTasks = require('./endpoints/serve-tasks.js');
+// Requests
+const taskCreate = require('./endpoints/task-create.js');
+const taskUpdate = require('./endpoints/task-update.js');
+const taskDelete = require('./endpoints/task-delete.js');
 
-const topicCreate = require('./endpoints/serve-topic-create');
-const topicCreatePost = require('./endpoints/serve-topic-list-post');
-
-const topicPostCreate = require('./endpoints/serve-topic-post-create');
-const topicPostCreatePost = require('./endpoints/serve-topic-post-list-post');
+// | Journal | //
+// Content
+const serveJournal = require('./endpoints/serve-journal.js');
+const serveJournalEntry = require('./endpoints/serve-journal-entry.js');
+// Requests
+const journalEntryCreate = require('./endpoints/journal-entry-create.js');
+const journalEntryUpdate = require('./endpoints/journal-entry-update.js');
+const journalEntryDelete = require('./endpoints/journal-entry-delete.js');
 
 // Middleware
-const authOnly = require('./middleware/auth-only');
+//const authOnly = require('./middleware/auth-only');
 const loadBody = require('./middleware/load-body');
-const loadSession = require('./middleware/load-session');
+//const loadSession = require('./middleware/load-session');
 
 /** @module app 
- * The express application for our site
+ * Express application site
  */
 var app = express();
 
 // Load session for each page...
-app.use(loadSession);
+//app.use(loadSession);
 
-// Serve index page...
-app.get('/$|/index.html|/index', serveIndex);
+// Serve Dashboard page...
+app.get('/$|/dashboard', serveDashboard);
 
-// Serve standards page...
-app.get('/standards.html|/standards', serveStandards);
+// Serve Tasks page
+app.get('/tasks', serveTasks);
 
-// Topic serving...
-//app.get('/forum/topics/new', topicCreate);
+app.post('/tasks', taskCreate);
+app.put('/tasks', taskUpdate);
+app.delete('/tasks', taskDelete);
 
-app.get('/forum/topics/:topicid/posts/create', authOnly, topicPostCreate);
+// Serve Journal page
+app.get('/journal', serveJournal);
 
-app.get('/forum/topics/:topicid/posts', topicPostList);
-app.post('/forum/topics/:topicid/posts', authOnly, loadBody, topicPostCreatePost);
+app.post('/journal', journalEntryCreate);
+app.put('/journal', journalEntryUpdate);
+app.delete('/journal', journalEntryDelete);
 
-app.get('/forum/topics/create', authOnly, topicCreate);
-app.get('/forum|/forum/topics', topicList);
-app.post('/forum/topics', authOnly, loadBody, topicCreatePost); // app.post('/posts', authorsOnly, loadBody, createPost);
-
-// Access serving...
-app.get('/signup.html|/signup', serveSignup);
-app.post('/signup.html|/signup', loadBody, createUser);
-
-app.get('/signin.html|/signin', serveSignin);
-app.post('/signin.html|/signin', loadBody, createSession);
-
-app.get('/signout.html|/signout', destroySession);
+// Serve Journal entry page
+app.get('/journal/:id', serveJournalEntry);
 
 // Include static files from public/
 app.use(express.static('public'));
