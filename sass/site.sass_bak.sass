@@ -1,0 +1,115 @@
+// Colors
+@use 'colors'
+@import 'components'
+
+$max-width: 1600px // 1300px
+$page-columns: 15% auto 15%
+$font-color: colors.$mono-black
+
+/* Browser */
+html, body, p, ul
+  margin: 0
+  padding: 0
+  color: $font-color
+
+html
+  font-family: Verdana
+  background: colors.$mono-lighter
+
+body
+  background: colors.$mono-black
+
+/* Header */
+ul.header
+  display: block
+  width: 100%
+  height: 40px
+  background: linear-gradient(to right, colors.$primary-dark, colors.$primary-light)
+
+/* Page */
+.page
+  display: flex
+  width: 100%
+  height: 100%
+  max-width: $max-width
+  margin: 0 auto
+  background: colors.$mono-white
+
+  .sidebar
+    width: 15%
+    min-width: 190px
+    background: colors.$mono-light
+
+    &--left
+      @extend .sidebar
+
+    &--right
+      @extend .sidebar
+
+  .primary-content
+    flex-grow: 1
+    min-width: 850px
+
+/* Left Sidebar - User Info */
+.user-info
+  position: relative
+  height: 40px
+  margin: 10px auto
+
+  img
+    position: absolute
+    width: 40px
+    height: 40px
+    margin-left: 10px
+
+  .greeting
+    position: absolute
+    bottom: 0
+    margin-left: 60px
+    padding-bottom: 0
+    font-size: 0.7rem
+
+    .username
+      font-size: 0.9rem
+
+/* Left Sidebar - Navigation */
+ul.nav
+  float: right
+  padding-left: 10px
+  //
+  list-style: none
+
+  a
+    @include button(180px, 0.8rem, false, colors.$primary-light)
+    //width: auto
+    //margin: 0.8rem 0
+    //font-size: 0.8rem
+    text-decoration: none
+    border-top-left-radius: 1rem
+    border-bottom-left-radius: 1rem
+    background: colors.$mono-light
+
+    //p
+    //  height: 2rem
+    //  width: 180px
+    //  line-height: 2rem
+
+    &:hover
+      background: colors.$mono-white
+
+    &.enabled
+      font-weight: bold
+
+      .circle--attach
+        background: colors.$primary-light
+
+    //  .circle
+    //    background: colors.$primary-light  
+
+/* Circle */
+.circle--attach
+  @include circle(0.8em, colors.$mono-light)
+
+/* Invisify */
+.logo, .search-bar, .logout
+  display: none

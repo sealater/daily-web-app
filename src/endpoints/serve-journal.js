@@ -5,8 +5,11 @@
 const pug = require('pug');
 const renderTemplate = require('../render-template')
 
+// Database
+const db = require('../db.js');
+
 // Cache page
-const page = pug.compileFile('templates/template.html.pug');
+const page = pug.compileFile('templates/journal.html.pug');
 
 /** @function serve
  * Serves the page
@@ -15,8 +18,10 @@ const page = pug.compileFile('templates/template.html.pug');
  */
 
 function serve(req, res) {
+  var entriesResults = db.getJournalEntries()
+
   // Render
-  var html = renderTemplate(page);
+  var html = renderTemplate(page, {entries: entriesResults});
   
   res.setHeader('Content-Type', "text/html");
   res.setHeader('Content-Length', html.length);

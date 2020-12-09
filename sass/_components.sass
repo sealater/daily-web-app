@@ -1,0 +1,143 @@
+//// Components
+@use 'colors'
+
+/**
+  * Button Mixin
+  * font-size
+  * border-radius
+  * enabled-color
+  * color
+  */
+
+@mixin button($width, $font-size, $border-radius: false, $color: false)
+  display: block
+  //width: auto
+  height: $font-size * 2
+  margin: $font-size 0
+  font-size: $font-size
+  cursor: pointer
+  //text-decoration: none
+
+  @if $border-radius != false
+    border-radius: $border-radius // TL/BL: 1rem
+
+  @if $color
+    background: $color
+
+    p
+      color: colors.$mono-light
+
+    .circle--attach
+      background: colors.$mono-light
+
+    &:hover
+      background: colors.$mono-white
+      
+      p
+        color: colors.$mono-black
+
+      .circle--attach
+        background: $color
+
+  .circle--attach
+    float: left
+    @include circle(0.6rem, $font-size, darken(colors.$mono-light, 2%))
+
+  p
+    display: block
+    width: $width
+    height: 100%
+    line-height: $font-size * 2
+    padding: calc($font-size/2 - 1px)
+    //padding: 0.3rem 0
+    //padding-right: $font-size - 0.2rem
+    //line-height: $font-size*2
+
+/** Circle Mixin
+  *  $radius
+  *  $color */
+
+@mixin circle($radius, $container, $color)
+  //float: left
+  width: $radius
+  height: $radius
+  margin: $container - $radius/2
+  border-radius: $radius/2
+  background: $color
+
+/** Entry Row **/
+
+.entry-row--wrapper
+  position: relative
+  width: 100%
+  border-radius: 12px
+  border: 1px solid transparent
+  cursor: pointer
+  opacity: 0
+
+  &:hover
+    background: colors.$primary-fill
+
+  &:active 
+    border: 1px solid colors.$primary-light
+
+  .entry-row--header
+    position: relative
+    width: 100%
+    min-height: 2.8rem
+
+    .entry-row--circle
+      @include circle(0.8rem, 1.4rem, colors.$color-picker-1)
+      position: absolute
+      //background: colors.$color-picker-1
+
+    .entry-row--title
+      float: left
+      line-height: 2.8rem
+      margin-left: 2.8rem
+      font-size: 1rem
+      
+    .entry-row--date
+      float: right
+      line-height: 2.8rem
+      margin-right: 1rem
+      font-size: 0.8rem
+      color: lighten(colors.$mono-black, 40%)
+
+  .entry-row--content
+    //width: 100%
+    line-height: 1.4rem
+    margin: 0 2.8rem
+    padding-bottom: 1.4rem
+    font-size: 0.9rem
+    color: lighten(colors.$mono-black, 20%)
+
+.entry-row--divider
+  width: calc(100% - 40px)
+  height: 1px
+  margin: 10px auto
+  background: colors.$mono-light
+
+.entry-row--edit
+  position: absolute
+  height: 100%
+  min-height: 2.8rem
+  min-width: 4rem
+  z-index: 100
+
+  &:hover
+    .archive-btn, .remove-btn
+      visibility: visible
+
+  .archive-btn, .remove-btn
+    @include circle(1.2rem, 1.2rem, colors.$interaction-grey-dark)
+    visibility: hidden
+    cursor: pointer
+
+  .archive-btn:hover, .remove-btn:hover
+    background: colors.$mono-white
+
+  .archive-btn
+
+  .remove-btn
+    background: colors.$interaction-red

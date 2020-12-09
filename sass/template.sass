@@ -1,0 +1,181 @@
+// template.sass
+
+$max-width: 1600px // 1300px
+$sidebar--min-width: 190px
+$page-columns: 15% auto 15%
+$font-color: colors.$mono-black
+
+/* Browser */
+*
+  margin: 0
+  padding: 0
+  box-sizing: border-box
+  line-height: 1em
+
+html, body, p, ul, a
+  margin: 0
+  padding: 0
+  color: $font-color
+
+html
+  font-family: Verdana
+  //background: colors.$mono-lighter
+
+body
+  //background: colors.$mono-light
+
+h1, h2, h3, h4
+  font-weight: normal
+
+h1
+  margin: 10px
+  //margin-bottom: 0
+  font-size: 2rem
+
+a
+  display: block
+  text-decoration: none
+
+/* Header */
+.header--container
+  display: block
+  width: 100%
+  background: linear-gradient(to right, colors.$primary-dark, colors.$primary-light)
+
+ul.header
+  display: flex
+  max-width: $max-width
+  margin: 0 auto
+
+  li
+    flex-grow: 1
+    min-width: 825px
+    display: block
+    height: 30px
+    //line-height: 30px
+    margin: 8px 10px
+    align-self: center
+    border: 1px solid colors.$primary-dark
+    border-radius: 4px
+    background: colors.$interaction-grey-lighter
+
+    p, .search-bar
+      display: block
+      width: 100%
+      line-height: 28px // (-2px for li's border)
+      margin-left: 10px
+      font-size: 0.8rem
+      color: colors.$interaction-grey-dark
+
+  li:first-child, li:last-child
+    flex-grow: 0
+    width: calc(15% - 20px)
+    min-width: $sidebar--min-width - 20px
+    background: colors.$mono-light
+
+/* Search Bar */
+.search-bar
+  margin: 0
+  padding: 0
+  box-sizing: border-box
+  border: none
+  font-family: Verdana
+  background: none
+
+/* Page */
+.page
+  display: flex
+  width: 100%
+  height: 100%
+  max-width: $max-width
+  margin: 0 auto
+  background: colors.$mono-white
+
+  .sidebar
+    position: relative
+    width: 15%
+    min-width: $sidebar--min-width
+    //background: colors.$mono-light
+
+    &--left
+      @extend .sidebar
+
+    &--right
+      @extend .sidebar
+      // TODO: Why so shy?
+      visibility: hidden
+
+  .primary-content
+    flex-grow: 1
+    min-width: 850px
+
+/* Left Sidebar - User Info */
+.user-info
+  position: relative
+  height: 40px
+  margin: 10px auto
+
+  img
+    position: absolute
+    width: 40px
+    height: 40px
+    margin-left: 10px
+
+  .greeting
+    position: absolute
+    bottom: 0
+    margin-left: 60px
+    padding-bottom: 0
+    font-size: 0.7rem
+
+    .username
+      font-size: 0.9rem
+
+/* Left Sidebar - Navigation */
+ul.nav
+  //float: right
+  padding-left: 10px
+  margin: 0 30px
+  list-style: none
+
+  a
+    @include button(180px, 0.8rem, false, false)
+    text-decoration: none
+    border-radius: 0.8rem
+    //border-top-left-radius: 1rem
+    //border-bottom-left-radius: 1rem
+    //background: darken(colors.$mono-light, 4%)
+
+    .circle--attach
+      //float: left
+
+    &:hover
+      background: darken(colors.$primary-fill, 4%)
+
+    &.enabled
+      //font-weight: bold
+
+      .circle--attach
+        background: colors.$primary-light
+
+/* Left Sidebar - Logout */
+.logout
+  position: absolute
+  bottom: 5px
+  right: 5px
+  text-align: right
+
+  a
+    padding: 5px
+    text-align: right
+    font-size: 0.7em
+    color: $font-color
+    text-decoration: none
+
+/* Primary Content */
+.primary-content
+  max-width: calc(70% - 20px)
+  min-height: 940px
+  margin: 10px
+
+/* Circle */

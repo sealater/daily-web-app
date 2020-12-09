@@ -1,0 +1,81 @@
+// journal.sass
+
+.sort-panel--container
+  width: 100%
+  height: 3.2rem
+  margin: 0 10px
+
+  p
+    float: left
+    height: 100%
+    line-height: 3.2rem
+    margin-right: 10px
+    font-size: 0.8rem
+
+  .sort-btn
+    @include button(65px, 0.8rem, 0.8rem)
+    float: left
+    background: colors.$mono-light
+
+    p
+      width: unset
+      padding-right: 0.6rem
+
+    &--circle
+      @include circle(0.6rem, 0.8rem, colors.$mono-white)
+      float: left
+
+    &:nth-of-type(3), &:nth-of-type(4)
+      float: right
+
+    &:hover
+      background: darken(colors.$mono-light, 4%)
+
+    &:active
+      background: darken(colors.$mono-light, 8%)
+
+.journal-entries--container
+  width: 100%
+  min-height: 960px
+
+  // Row Formatting //
+  .entry-row--edit
+    opacity: 0
+    transition: opacity 0.1s
+
+    &:hover
+      opacity: 1
+
+  .entry-row--edit, .remove-btn
+    position: absolute
+    bottom: 0
+    right: 0
+
+  .archive-btn
+    position: absolute
+    bottom: 0
+    right: 1.8rem
+
+/* Debug Styling */
+table.entries
+  font-family: Verdana
+  border-collapse: collapse
+  width: 100%
+
+  td, th
+    border: 1px solid #dddddd
+    text-align: left
+    padding: 8px
+
+  tr:nth-child(even)
+    background-color: #dddddd
+
+.debug-button
+    &--green
+        @include button(120px, 0.8rem, 1rem, colors.$interaction-green)
+
+    &--red
+        @include button(120px, 0.8rem, 1rem, colors.$interaction-red)
+
+    &--grey
+        @include button(120px, 0.8rem, 1rem, colors.$interaction-grey-dark)

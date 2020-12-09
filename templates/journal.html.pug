@@ -3,32 +3,109 @@
 
 extends template.html.pug
 
-mixin postRow(body, author, date)
-  a.item-container
-    .item.body: p= body
-    .item.author: p= author
-    .item.date: p= date
+block primary-content
 
-block content
-  .forum-wrapper
-    .standards-container.forum.posts
-      .standards-header-container.forum.posts
-        .standards-header.forum.posts
-          h1= 'Posts for ' + topicSubject
-          h1 Author
-          h1 Date Created
+mixin entryRow(id, title, content, created, colorPreset, archived, removed)
+  a.entry-row--wrapper(href='/journal/' + id)
+    .entry-row--header
+      .entry-row--circle(style='background:' + colorPresets[colorPreset])
+      h2.entry-row--title=title
+      p.entry-row--date=formatDate(created)
 
-      each post in posts
-        +postRow(  post.body,
-                   post.author,
-                   post.date )  
-      
-      .item-container
-        a.button.col1.small(href='../../'): p Return
-        a.button.col3(href='posts/create'): p Create new post
+    -
+      var preview = content.substring(0, 200).trim();
+      if (content.length >= 200)
+        preview += '...';
 
-block scripts        
-  //script(src='/standards.js')  
+    p.entry-row--content=preview
 
-            
+    .entry-row--edit
+      .remove-btn
+      .archive-btn
 
+  .entry-row--divider
+
+block primary-content
+  //- Format date data
+  - 
+    function formatDate(date) {
+          var options = {weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit'};
+          return new Date(date).toLocaleDateString('en-US', options);
+    }
+
+  h1 My Journal
+
+  .sort-panel--container
+    p Sort by:
+    .sort-btn
+      .sort-btn--circle
+      p Name
+    .sort-btn
+      .sort-btn--circle
+      p Date
+    .sort-btn
+      .sort-btn--circle
+      p Archived
+    .sort-btn
+      .sort-btn--circle
+      p Removed
+
+  .journal-entries--container
+    each entry in entries
+      +entryRow(
+        entry.id,
+        entry.title,
+        entry.content,
+        entry.created,
+        entry.colorPreset,
+        entry.archived,
+        entry.removed)
+
+  // Debug!
+
+  mixin entryRowDebug(id, title, content, created, colorPreset, archived, removed)
+    tr
+      td= id
+      td= title
+      td= content
+      td= created
+      td= colorPreset
+      td= archived
+      td= removed
+      td.exclude
+        a.debug-button--green(href='/journal/' + id)
+            .circle--attach
+            p Open
+        .debug-panel(data-id=id)
+          .debug-button--red(data-action='remove')
+            .circle--attach
+            p Remove
+          .debug-button--green(data-action='restore')
+            .circle--attach
+            p Restore
+          .debug-button--grey(data-action='archive')
+            .circle--attach
+            p Archive
+          .debug-button--green(data-action='unarchive')
+            .circle--attach
+            p Unarchive
+
+  table.entries
+    tr
+      th Id
+      th Title
+      th Content
+      th Created
+      th Color Preset
+      th Archived
+      th Removed
+      td Debug Panel
+
+    each entry in entries
+      +entryRowDebug(entry.id,
+                entry.title,
+                entry.content,
+                entry.created,
+                entry.colorPreset,
+                entry.archived,
+                entry.removed)

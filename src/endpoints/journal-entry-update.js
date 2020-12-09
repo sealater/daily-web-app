@@ -2,11 +2,9 @@
  * Updates a journal entry
 */
 
-const pug = require('pug');
-const renderTemplate = require('../render-template')
-
-// Cache page
-const page = pug.compileFile('templates/template.html.pug');
+// Database
+const db = require('../db-interact.js');
+const sanitizeHtml = require('sanitize-html');
 
 /** @function serve
  * Serves the page
@@ -15,12 +13,36 @@ const page = pug.compileFile('templates/template.html.pug');
  */
 
 function serve(req, res) {
-  // Render
-  var html = renderTemplate(page);
-  
-  res.setHeader('Content-Type', "text/html");
-  res.setHeader('Content-Length', html.length);
-  res.end(html);
+  var id = parseInt(req.body.id, 10);
+  var action = req.body.action;
+
+  var properties = {}
+
+  switch (action) {
+    case 'archive': properties.archived = true; break;
+    case 'unarchive': properties.archived = false; break;
+    case 'remove': properties.removed = true; break;
+    case 'restore': properties.removed = false; break;
+    //
+    case 'color': properties.colorPreset = parseInt(req.body.colorPreset, 10); break;
+    //
+    case 'save':
+      properties.title = sanitizeHtml(req.body.title);
+      properties.content = sanitizeHtml(req.body.content);
+      break;
+  }
+
+  // Get user input data
+
+  // ! Sanitize
+  // TODO: Should check for success
+  db.commit({type: 'journal', action: 'update'},
+            {id: id, properties: properties});
+
+  // Return updated data
+  // TODO: Should send error messages
+  res.writeHead(200, {'Content-Type': 'application/json'}); 
+  res.end(JSON.stringify(properties));
 }
 
 module.exports = serve;

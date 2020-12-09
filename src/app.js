@@ -36,25 +36,26 @@ const loadBody = require('./middleware/load-body');
  */
 var app = express();
 
-// Load session for each page...
-//app.use(loadSession);
+function logBody(req, res, next) {
+    console.log("Body:", JSON.parse(JSON.stringify(req.body)));
+    next();
+};
 
 // Serve Dashboard page...
 app.get('/$|/dashboard', serveDashboard);
 
-// Serve Tasks page
+// Serve Tasks page...
 app.get('/tasks', serveTasks);
 
-app.post('/tasks', taskCreate);
-app.put('/tasks', taskUpdate);
-app.delete('/tasks', taskDelete);
+app.post('/tasks', loadBody, logBody, taskUpdate);
+//app.put('/tasks', taskUpdate);
+//app.delete('/tasks', taskDelete);
 
-// Serve Journal page
+// Serve Journal page...
 app.get('/journal', serveJournal);
-
-app.post('/journal', journalEntryCreate);
-app.put('/journal', journalEntryUpdate);
-app.delete('/journal', journalEntryDelete);
+app.post('/journal', loadBody, logBody, journalEntryUpdate);
+//app.put('/journal', (req, res, next) => res.send('Put...'), journalEntryUpdate);
+//app.delete('/journal', journalEntryDelete);
 
 // Serve Journal entry page
 app.get('/journal/:id', serveJournalEntry);

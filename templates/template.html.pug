@@ -4,35 +4,46 @@
 doctype html
 html
     head
-        title Kansas Computer Science Standards
-        link(href='/site.css' rel='stylesheet')
-        link(href='https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css' rel='stylesheet')
+        title Daily
+        link(href='/stylesheets/site.css' rel='stylesheet')
+        link(href='/stylesheets/external/quill.bubble.css' rel='stylesheet')
         meta(name='viewport' content='width=device-width, initial-scale=1')
+        script(src='/js/external/jquery-3.5.1.min.js')
+        script(src='/js/external/quill.min.js')
+        script(src='/js/client.js')
     body
 
-          
-        .title-container
-        
-          if user
-            .login-floater
-              p= 'Welcome ' + user.name
-              a(href='/signout'): p Sign out
-          else
-            .login-floater
-              a(href='/signin'): p Login
-              a(href='/signup'): p Sign Up
-          
-            
-          h1 Computer Science for Kansas Organization
-          ul.navbar
-            li: a(href='/'): p Home
-            li: a(href='/standards'): p Standards
-            li: a(href='/forum'): p Forum
-            li: a(href='https://www.csteachers.org/'): p CS Teachers
-            
-        block content
-          
-        .credit-container
-          a(href='https://unsplash.com/photos/OrwkD-iWgqg') Photo by Meiying Ng
-          
-        block scripts
+      include colors
+
+      .header--container
+        ul.header
+          li.logo: p Logo Placeholder
+          li: input.search-bar(type='search' placeholder='Temporary Search Bar')
+          li: p Placeholder
+
+      .page
+        .sidebar--left
+          .user-info
+            img(src='/imgs/profile.png')
+            .greeting
+              p Hello,
+              p.username #AccountName
+          ul.nav
+            li: a.enabled(href='/dashboard')
+                  .circle--attach
+                  p Dashboard
+            li: a(href='/tasks')
+                  .circle--attach
+                  p My Tasks
+            li: a(href='/journal')
+                  .circle--attach
+                  p My Journal
+            li: a(href='/metrics' style='text-decoration: line-through')
+                  .circle--attach
+                  p My Metrics
+                  
+          .logout: a(href='/') Logout
+
+        .primary-content: block primary-content
+
+        .sidebar--right

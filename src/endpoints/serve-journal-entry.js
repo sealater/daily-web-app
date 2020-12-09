@@ -5,8 +5,11 @@
 const pug = require('pug');
 const renderTemplate = require('../render-template')
 
+// Database
+const db = require('../db.js');
+
 // Cache page
-const page = pug.compileFile('templates/template.html.pug');
+const page = pug.compileFile('templates/journal-entry.html.pug');
 
 /** @function serve
  * Serves the page
@@ -15,8 +18,14 @@ const page = pug.compileFile('templates/template.html.pug');
  */
 
 function serve(req, res) {
+  // Determine the topic ID
+  const id = parseInt(req.params.id, 10);
+
+  // Get Journal entry
+  var entryResult = db.getJournalEntry(id);
+
   // Render
-  var html = renderTemplate(page);
+  var html = renderTemplate(page, {entry: entryResult});
   
   res.setHeader('Content-Type', "text/html");
   res.setHeader('Content-Length', html.length);

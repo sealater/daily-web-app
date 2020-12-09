@@ -2,11 +2,8 @@
  * Creates a task
 */
 
-const pug = require('pug');
-const renderTemplate = require('../render-template')
-
-// Cache page
-const page = pug.compileFile('templates/template.html.pug');
+// Database
+//const db = require('../db.js');
 
 /** @function serve
  * Serves the page
@@ -15,12 +12,16 @@ const page = pug.compileFile('templates/template.html.pug');
  */
 
 function serve(req, res) {
-  // Render
-  var html = renderTemplate(page);
-  
-  res.setHeader('Content-Type', "text/html");
-  res.setHeader('Content-Length', html.length);
-  res.end(html);
+  //var subject = req.body.subject;
+  // Get user input data
+
+  // ! Sanitize title, note, completeBy, colorPreset
+  //db.createTask("Created Task", "Task note...", new Date().toString(), 0);
+
+
+  // Redirect
+  res.writeHead(302, {"Location": `/tasks`});
+  res.end();
 }
 
 module.exports = serve;

@@ -1,0 +1,48 @@
+// tasks.sass
+
+.task-entries--container
+  width: 100%
+  min-height: 960px
+
+  /* Row Formatting */
+  .entry-row--wrapper
+    border-radius: 2rem
+
+  .entry-row--content
+    display: none
+
+  .entry-row--edit
+    position: relative
+    float: right
+    min-height: 2.8rem
+    margin-left: calc(-4rem - 10px)
+    opacity: 0
+    transition: margin-left 0.1s, opacity 0.1s
+    overflow: hidden
+
+    &:hover
+      position: relative
+      float: right
+      //width: 0px
+      margin-left: -10px
+      opacity: 1
+
+    .archive-btn, .remove-btn
+      @include circle(1.2rem, 1.4rem, colors.$interaction-grey-dark)
+
+    .archive-btn
+      float: right
+      margin-left: 0
+      margin-right: 0.6rem
+
+      &:hover
+        background: lighten(colors.$interaction-grey-dark, 30%)
+
+    .remove-btn
+      float: right
+      margin-left: 0
+      margin-right: 0.8rem
+      background: colors.$interaction-red
+
+      &:hover
+        background: lighten(colors.$interaction-red, 30%)

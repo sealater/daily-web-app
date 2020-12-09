@@ -1,35 +1,9 @@
 //- dashboard.html.pug
 //- Dashboard page content
 
-extends template.html.pug
+extends template.html.pug 
 
-mixin postRow(body, author, date)
-  a.item-container
-    .item.body: p= body
-    .item.author: p= author
-    .item.date: p= date
+block primary-content
+    h1 Dashboard
 
-block content
-  .forum-wrapper
-    h1 Hello World!
-    .standards-container.forum.posts
-      .standards-header-container.forum.posts
-        .standards-header.forum.posts
-          h1= 'Posts for ' + topicSubject
-          h1 Author
-          h1 Date Created
-
-      //each post in posts
-      //  +postRow(  post.body,
-      //             post.author,
-      //             post.date )
-      
-      .item-container
-        a.button.col1.small(href='../../'): p Return
-        a.button.col3(href='posts/create'): p Create new post
-
-block scripts        
-  //script(src='/standards.js')  
-
-            
-
+    .dashboard-fill
